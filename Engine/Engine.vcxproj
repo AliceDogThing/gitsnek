@@ -150,6 +150,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Snake.h" />
+    <ClInclude Include="SnekFrameTimer.h" />
     <ClInclude Include="SpriteCodex.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="SnekFrameTimer.cpp" />
     <ClCompile Include="SpriteCodex.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>

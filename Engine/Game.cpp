@@ -22,6 +22,7 @@
 #include "Game.h"
 #include "Board.h"
 #include "SpriteCodex.h"
+#include <chrono>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -42,32 +43,35 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
+using std::chrono::steady_clock;
+steady_clock::time_point start = steady_clock::now();
 void Game::UpdateModel()
 {
+	
 	brd.DrawBorder(Colors::Cyan);
 	if (!gameIsOver)
 	{
-		if (wnd.kbd.KeyIsPressed(VK_UP) && delta_loc.y != 1)
-		{
-			delta_loc = { 0,-1 };
-		}
-		else if (wnd.kbd.KeyIsPressed(VK_DOWN) && delta_loc.y != -1)
-		{
-			delta_loc = { 0,1 };
-		}
-		else if (wnd.kbd.KeyIsPressed(VK_LEFT) && delta_loc.x != 1)
-		{
-			delta_loc = { -1,0 };
-		}
-		else if (wnd.kbd.KeyIsPressed(VK_RIGHT) && delta_loc.x != -1)
-		{
-			delta_loc = { 1,0 };
-		}
-		++snekMoveCounter;
+		
+		snekMoveCounter += ft.Mark() * 60; //change this to be the difference in time/duration between frames
 		if (snekMoveCounter > snekMovePeriod)
 		{
-			snekMoveCounter = 0;
+			if (wnd.kbd.KeyIsPressed(VK_UP) && delta_loc.y != 1)
+			{
+				delta_loc = { 0,-1 };
+			}
+			else if (wnd.kbd.KeyIsPressed(VK_DOWN) && delta_loc.y != -1)
+			{
+				delta_loc = { 0,1 };
+			}
+			else if (wnd.kbd.KeyIsPressed(VK_LEFT) && delta_loc.x != 1)
+			{
+				delta_loc = { -1,0 };
+			}
+			else if (wnd.kbd.KeyIsPressed(VK_RIGHT) && delta_loc.x != -1)
+			{
+				delta_loc = { 1,0 };
+			}
+			snekMoveCounter = 0.0f;
 			const Location next = snek.GetNextHeadLocation(delta_loc);
 			if (!brd.IsInsideBoard(next) || snek.IsInTile(next) || wall.IsInSpot(next))
 			{
@@ -100,9 +104,9 @@ void Game::UpdateModel()
 				wall.NewSpot(rng, brd, snek);
 				snekSegCounter = 0;
 				//add two new dots and reset counter for dots eaten
-				if (snekMovePeriod > 3) //as long as the frames between movement is above 3 reduce it by 3
+				if (snekMovePeriod > 3.0f) //as long as the frames between movement is above 3 reduce it by 3
 				{
-					snekMovePeriod -= 3;
+					snekMovePeriod -= 3.0f;
 				}
 				
 			}
@@ -114,6 +118,9 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	
+
+	
 	snek.Draw(brd);
 	goal.Draw(brd);
 	wall.Draw(brd);
@@ -121,5 +128,9 @@ void Game::ComposeFrame()
 	if (gameIsOver)
 	{
 		SpriteCodex::DrawGameOver(200, 200, gfx);
+		steady_clock::time_point end = std::chrono::steady_clock::now();
+		std::chrono::duration<float> runtime = end - start;
+		float durationSeconds = runtime.count();
 	}
+	
 }

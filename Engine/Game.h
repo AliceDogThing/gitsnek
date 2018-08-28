@@ -28,6 +28,7 @@
 #include "Goal.h"
 #include "Wall.h"
 #include <random>
+#include "SnekFrameTimer.h"
 
 class Game
 {
@@ -47,14 +48,15 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
 	Board brd;
 	Snake snek;
 	Location delta_loc = { 1,0 };
 	std::mt19937 rng;
 	Goal goal;
 	Wall wall;
-	int snekMovePeriod = 15;
-	int snekMoveCounter = 0;
+	float snekMovePeriod = 15.0f;
+	float snekMoveCounter = 0.0f;
 	int snekSegCounter = 0;
 	int patternCount = 3;
 	bool gameIsOver = false;
