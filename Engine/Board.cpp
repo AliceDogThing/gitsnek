@@ -44,33 +44,38 @@ int Board::GetGridHeight() const
 	return height;
 }
 
+int Board::GetBuffer() const
+{
+	return borderBuffer;
+}
+
 bool Board::IsInsideBoard(const Location & loc) const
 {
-	return loc.x >= 1 && loc.x < width-1
-		&& loc.y >= 1 && loc.y < height-1;
+	return loc.x >= (1+borderBuffer) && loc.x < width-(1+borderBuffer)
+		&& loc.y >= (1+borderBuffer) && loc.y < height-(1+borderBuffer);
 }
 
 void Board::DrawBorder(Color c)
 {
 	
-	for (int i = 0; i < width; i++)
+	for (int i = borderBuffer; i < width- borderBuffer; i++)
 	{
-		Location borderLoc{ i, 0 };
+		Location borderLoc{ i, borderBuffer };
 		DrawCell(borderLoc, c);
 	}
-	for (int i = 0; i < height; i++)
+	for (int i = borderBuffer; i < height- borderBuffer; i++)
 	{
-		Location borderLoc{ 0, i };
+		Location borderLoc{ borderBuffer, i };
 		DrawCell(borderLoc, c);
 	}
-	for (int i = 0; i < width; i++)
+	for (int i = borderBuffer; i < width- borderBuffer; i++)
 	{
-		Location borderLoc{ i, height-1 };
+		Location borderLoc{ i, height-(1+ borderBuffer) };
 		DrawCell(borderLoc, c);
 	}
-	for (int i = 0; i < height; i++)
+	for (int i = borderBuffer; i < height- borderBuffer; i++)
 	{
-		Location borderLoc{ width-1, i };
+		Location borderLoc{ width-(1+ borderBuffer), i };
 		DrawCell(borderLoc, c);
 	}
 }
