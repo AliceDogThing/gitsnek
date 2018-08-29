@@ -32,7 +32,7 @@ Game::Game( MainWindow& wnd )
 	rng(std::random_device()()),
 	goal(rng, brd, snek),
 	wall(rng, brd, snek),
-	snek({ 7,7 })
+	snek({ 20,15 })
 {
 }
 

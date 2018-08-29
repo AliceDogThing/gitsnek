@@ -19,7 +19,7 @@ private:
 	static constexpr int dimension = 20;
 	static constexpr int width = 40;
 	static constexpr int height = 30;
-	static constexpr int borderBuffer = 5;
+	static constexpr int borderBuffer = 8;
 	Graphics& gfx;
 
 
